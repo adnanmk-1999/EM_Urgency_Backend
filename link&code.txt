@@ -1,0 +1,202 @@
+==> APIs
+
+http://localhost:4010/users/register                            -- User Register                -- POST
+http://localhost:4010/users/login                               -- User Login                   -- POST
+http://localhost:4010/users/relogin                             -- Refesh Token                 -- POST
+http://localhost:4010/roles                                     -- Check Role server            -- GET
+http://localhost:4010/roles/usercontent                         -- Check User Content           -- GET
+http://localhost:4010/roles/admincontent                        -- Check Admin Content          -- GET
+http://localhost:4010/users                                     -- Display Users                -- GET
+http://localhost:4010/users/response                            -- Response table               -- GET
+http://localhost:4010/admin/alert                               -- Alert table                  -- GET
+http://localhost:4010/admin/sentalert/all                       -- Send Mail (ALL)              -- POST
+http://localhost:4010/admin/sentalert/departments               -- Send Mail (Depatements)      -- POST
+http://localhost:4010/admin/sentalert/locations                 -- Send Mail (Locations)        -- POST
+http://localhost:4010/admin/sentalert/individuals               -- Send Mail (Individuals)      -- POST
+http://localhost:4010/users/alerts                              -- User Specific Alerts         -- GET
+http://localhost:4010/users/alertresponses                      -- Aler Responses               -- POST
+http://localhost:4010/admin/barchart                            -- Barchart Details (for Date)-- POST
+
+
+
+=>Users Email
+
+thasnisathar2017@gmail.com
+adnan.trv17ee003@gecbh.ac.in
+jijo8595@gmail.com
+akashtestacc.101@gmail.com
+
+
+
+=> Create table:
+
+INSERT INTO testdb.roles VALUES (1, 'user', now(), now());
+INSERT INTO testdb.roles VALUES (2, 'admin', now(), now());
+
+=> Update gmail:
+
+UPDATE testdb.users SET email = "akashtestacc.101@gmail.com" WHERE id = 3;
+
+=> Fail Alert
+
+INSERT INTO testdb.alerts VALUES (2, '2022-02-17', 'Cricket Match', 'Experion Tournament @10 am', 0, now(), now(), 3, 2);
+
+=> Delete Query
+
+DELETE FROM testbd.users WHERE id = 6;
+
+----------------------------------------------POST REQEUST BODY--------------------------------------------------------------
+
+=> User register
+
+{
+    "name" : "Thasni",
+    "username" : "Thasni123",
+    "password" : "123456",
+    "email" : "thasnisathar2017@gmail.com",
+    "contact" : "7025174658",
+    "gender" : "Female",
+    "image" : "https://em-urgency.s3.ap-south-1.amazonaws.com/thasni.png",
+    "departmentId" : "1",
+    "locationId" : "2",
+    "gradeId" : "3",
+    "jobtitleId" : "1",
+    "roles" : ["User"]
+}
+
+{
+    "name" : "Adnan",
+    "username" : "adnan123",
+    "password" : "123456",
+    "email" : "adnan.trv17ee003@gecbh.ac.in",
+    "contact" : "7025174658",
+    "gender" : "Male",
+    "image" : "https://em-urgency.s3.ap-south-1.amazonaws.com/adnan.png",
+    "departmentId" : "2",
+    "locationId" : "1",
+    "gradeId" : "3",
+    "jobtitleId" : "2",
+    "roles" : ["Admin","User"]
+}
+
+{
+    "name" : "Akash",
+    "username" : "akash123",
+    "password" : "123456",
+    "email" : "akashtestacc.101@gmail.com",
+    "contact" : "7025174658",
+    "gender" : "Male",
+    "image" : "https://em-urgency.s3.ap-south-1.amazonaws.com/akash.jpg",
+    "departmentId" : "3",
+    "locationId" : "3",
+    "gradeId" : "2",
+    "jobtitleId" : "3",
+    "roles" : ["User"]
+}
+
+{
+    "name" : "Jijo",
+    "username" : "jijo123",
+    "password" : "123456",
+    "email" : "jijo8595@gmail.com",
+    "contact" : "7025174658",
+    "gender" : "Male",
+    "image" : "https://em-urgency.s3.ap-south-1.amazonaws.com/jijo.png",
+    "departmentId" : "2",
+    "locationId" : "1",
+    "gradeId" : "1",
+    "jobtitleId" : "4",
+    "roles" : ["User"]
+}
+
+{
+    "name" : "Ajay",
+    "username" : "ajay123",
+    "password" : "123456",
+    "email" : "ajaypranav1999@gmail.com",
+    "contact" : "7025174658",
+    "gender" : "Male",
+    "image" : "https://em-urgency.s3.ap-south-1.amazonaws.com/ajay.jpg",
+    "departmentId" : "3",
+    "locationId" : "1",
+    "gradeId" : "1",
+    "jobtitleId" : "3",
+    "roles" : ["User"]
+}
+
+=> Alert creation
+
+{
+    "date" : "02-24-2022",
+    "subject" : "meeting@6pm",
+    "message" : "join meeting@6pm",
+    "statusId" : "1",
+    "categoryName" : "Holiday"
+}
+
+=> Make Response
+
+{
+    "userId" : "2",
+    "response" : "no",
+    "alertId" : "34"
+}
+
+=> Send Mail (ALL)
+
+{
+    "alertId" : 11,
+    "departmentId" : [],
+    "locationId" : [],
+    "message" : "Message 1",
+    "subject" : "Subject 1"
+}
+
+=> Send Mail (Departments)
+
+{
+    "alertId" : 11,
+    "departmentId" : [2,3],
+    "locationId" : [],
+    "message" : "Message 1",
+    "subject" : "Subject 1"
+}
+
+=> Send Mail (Locations)
+
+{
+    "alertId" : 11,
+    "departmentId" : [],
+    "locationId" : [2,1],
+    "message" : "Message 1",
+    "subject" : "Subject 1"
+}
+
+=> Send Mail (Specific Users)
+{
+   "alertId" : 4,
+   "individualId": [2,3],
+   "departmentId" : [],
+   "locationId" : [],
+   "message" : "Message 1",
+   "subject" : "Subject 1"
+}
+
+
+=> Alert Responses
+{
+    "alertId":6
+}
+
+=> Bar Chart Details (for a particular day)
+{
+    "currentDate" : "2022-02-24"
+}
+
+=> Email and password for nodemailer
+    EMAIL = emurgency.exp@gmail.com
+    PASSWORD = Test@1234
+
+=>  Email and password for microsoft login
+      Email : em.urgency.exp@outlook.com
+      Password : Test@12321
