@@ -4,12 +4,12 @@ require('dotenv').config();
 
 //Initialising Database
 const dbConfig = {
-    DB: process.env.DB,
-    HOST:process.env.HOST,
-    USER: process.env.USER,
-    PASSWORD: process.env.PASSWORD,
+    DB: process.env.DB_NAME,
+    HOST:process.env.DB_HOST,
+    USER: process.env.DB_USER,
+    PASSWORD: process.env.DB_PASSWORD,
    
-    dialect: "mysql",
+    dialect: process.env.DB_DIALECT,
     pool: {
       max: 5,
       min: 0,

@@ -23,7 +23,7 @@ db.authenticate().then(() => {
 })
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Authentication APP of EM-Urgency" });
+  res.json({ message: "Welcome to Backend Server for the EM-Urgency App" });
 });
 
 

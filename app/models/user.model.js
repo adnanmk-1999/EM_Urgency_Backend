@@ -11,16 +11,16 @@ const User = db.define("users", {
     allowNull: false
   },
   Name: {
-     type: Sequelize.STRING,
-     field:"name",
-     allowNull: false,
-     validate: {
-       isAlpha: true
-     }
+    type: Sequelize.STRING,
+    field: "name",
+    allowNull: false,
+    validate: {
+      isAlpha: true
+    }
   },
   Username: {
     type: Sequelize.STRING,
-    field:"username",
+    field: "username",
     allowNull: false,
     validate: {
       isAlphanumeric: true
@@ -28,7 +28,7 @@ const User = db.define("users", {
   },
   Email: {
     type: Sequelize.STRING,
-    field:"email",
+    field: "email",
     allowNull: false,
     validate: {
       isEmail: true
@@ -36,40 +36,60 @@ const User = db.define("users", {
   },
   Password: {
     type: Sequelize.STRING,
-    field:"password",
-    allowNull: false
-  }, 
-  Gender:{
-    type: Sequelize.ENUM('Male', 'Female', 'Others'),
-    field:"gender",
+    field: "password",
     allowNull: false
   },
-  Contact:{
+  Gender: {
+    type: Sequelize.ENUM('Male', 'Female', 'Others'),
+    field: "gender",
+    allowNull: false
+  },
+  Contact: {
     type: Sequelize.STRING,
     allowNull: false,
-    field:"contact",
+    field: "contact",
     validate: {
       isNumeric: true,
       len: [10, 10]
     }
   },
-  Image:{
+  Image: {
     type: Sequelize.STRING,
-    field:"image",
+    field: "image",
     allowNull: true,
     validate: {
       isUrl: true
     }
   },
+  Location_Id: {
+    type: Sequelize.BIGINT,
+    field: "location_id",
+    allowNull: false
+  },
+  Department_Id: {
+    type: Sequelize.BIGINT,
+    field: "department_id",
+    allowNull: false
+  },
+  Grade_Id: {
+    type: Sequelize.BIGINT,
+    field: "grade_id",
+    allowNull: false
+  },
+  Job_Title_Id: {
+    type: Sequelize.BIGINT,
+    field: "job_title_id",
+    allowNull: false
+  },
   createdAt: {
     allowNull: false,
-    field:"created_at",
+    field: "created_at",
     defaultValue: Sequelize.fn('now'),
     type: Sequelize.DATE
   },
   updatedAt: {
     allowNull: false,
-    field:"updated_at",
+    field: "updated_at",
     defaultValue: Sequelize.fn('now'),
     type: Sequelize.DATE
   }
