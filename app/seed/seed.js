@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const db = require("../config/database.config");
+const db = require("../models");
 
 // ==========================
 // MODELS
@@ -156,16 +156,18 @@ async function seed() {
         // ==========================
         console.log("Mapping users to roles...");
 
-        const admin = await User.findByPk(1);
-        const user1 = await User.findByPk(2);
-        const user2 = await User.findByPk(3);
+        const UserRoles = db.sequelize.models.user_roles;
 
-        const adminRole = await Role.findByPk(2);
-        const userRole = await Role.findByPk(1);
+        await UserRoles.bulkCreate(
+            [
+                { user_id: 1, role_id: 2 }, // Admin → Admin
+                { user_id: 1, role_id: 1 }, // Admin → User
+                { user_id: 2, role_id: 1 }, // Alice → User
+                { user_id: 3, role_id: 1 }, // Bob → User
+            ],
+            { ignoreDuplicates: true }
+        );
 
-        await admin.addRoles(adminRole);
-        await user1.addRoles(userRole);
-        await user2.addRoles(userRole);
 
         console.log("\n✨ SEEDING COMPLETED SUCCESSFULLY ✨");
         process.exit(0);
