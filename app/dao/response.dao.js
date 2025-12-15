@@ -80,29 +80,24 @@ function findAlertResponses(id) {
 }
 
 function barChartGet(date) {
-    return db.findAndCountAll({
+    return db.findAll({
         attributes: [
             ['alert_id', 'alertId'],
             [DB.sequelize.fn('COUNT', DB.sequelize.col('response')), 'Responded'],
-            [DB.Sequelize.literal('`alert`.`subject`'), 'subject'],
-            [DB.Sequelize.literal('`alert`.`message`'), 'message'],
-            [DB.Sequelize.literal('`alert`.`sent_count`'), 'sentCount'],
-            [DB.Sequelize.literal('`alert`.`date`'), 'date'],
-
+            [DB.Sequelize.literal('alert.subject'), 'subject'],
+            [DB.Sequelize.literal('alert.message'), 'message'],
+            [DB.Sequelize.literal('alert.sent_count'), 'sentCount'],
+            [DB.Sequelize.literal('alert.date'), 'date'],
         ],
-        group: 'alert_id',
-        raw : true,
         include: [{
             model: alert,
             required: true,
             attributes: [],
-            where : {'date': date }
+            where: { date }
         }],
-        order: [
-            ['id', 'DESC']
-        ]
-        
-
+        group: ['responses.alert_id'],
+        order: [[DB.Sequelize.literal('alert.id'), 'DESC']],
+        raw: true
     });
 }
 

@@ -256,19 +256,20 @@ function pieChartDraftCount(req, res) {
 }
 
 function barchartdetails(req, res) {
-
     responseDao.barChartGet(req.body.currentDate)
         .then((data) => {
 
-            for (i = 0; i < data.rows.length; i++) {
-                data.rows[i].Unresponded = data.rows[i].sentCount - data.rows[i].Responded;
+            for (let i = 0; i < data.length; i++) {
+                data[i].Unresponded =
+                    data[i].sentCount - data[i].Responded;
             }
-            res.status(200).send({ data: data.rows })
+
+            res.status(200).send({ data })
         })
         .catch((e) => {
-            console.log(e)
-            res.status(401).send({ message: "Error Occured !" })
-        })
+            console.error(e);
+            res.status(500).send({ message: "Error Occurred!" });
+        });
 }
 
 var alertController = {
