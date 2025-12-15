@@ -5,8 +5,8 @@ require('dotenv').config();
 
 const config = {
     secret: process.env.JWT_SECRET,
-    accessExpire: process.env.ACCESS_TOKEN_LIFE,
-    refreshExpire: process.env.REFRESH_TOKEN_LIFE
+    accessExpire: Number(process.env.ACCESS_TOKEN_LIFE),
+    refreshExpire: Number(process.env.REFRESH_TOKEN_LIFE)
 }
 
 module.exports = config;

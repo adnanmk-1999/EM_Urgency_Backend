@@ -167,6 +167,36 @@ async function seed() {
             ],
             { ignoreDuplicates: true }
         );
+        // ==========================
+        // USER ↔ ALERT MAPPING
+        // ==========================
+        console.log("Mapping users to alerts...");
+
+        // Sequelize auto-creates this join table model because of `through: "user_alerts"`
+        const UserAlerts = db.sequelize.models.user_alerts;
+
+        if (!UserAlerts) {
+            throw new Error(
+                "Join table model 'user_alerts' not found. Check `through: \"user_alerts\"` in models/index.js and table naming."
+            );
+        }
+
+        /**
+         * IMPORTANT:
+         * This requires that Alerts are already seeded BEFORE this runs.
+         * i.e., Alert table must contain Ids you reference below.
+         */
+        await UserAlerts.bulkCreate(
+            [
+                // Example mappings (update ids to match your seeded Alert IDs)
+                { user_id: 1, alert_id: 1 }, // Admin assigned Alert #1
+                { user_id: 2, alert_id: 1 }, // Alice assigned Alert #1
+                { user_id: 3, alert_id: 2 }, // Bob assigned Alert #2
+            ],
+            { ignoreDuplicates: true }
+        );
+
+        console.log("✅ user_alerts mapping done");
 
 
         console.log("\n✨ SEEDING COMPLETED SUCCESSFULLY ✨");
