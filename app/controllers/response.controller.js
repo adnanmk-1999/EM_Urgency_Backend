@@ -75,14 +75,14 @@ function findDb(req, res) {
         });
 }
 
-function findAlertResponses(req, res){
+function findAlertResponses(req, res) {
     responseDao.findAlertResponses(req.body.alertId)
-    .then((data) => {
-        res.status(200).send(data);
-    })
-    .catch((err) => {
-        res.status(500).send({ message: "No responses" ,err});
-    });
+        .then((data) => {
+            res.status(200).send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({ message: "No responses", err });
+        });
 
 
 }
@@ -93,7 +93,7 @@ var responseController = {
     findDbById: findDbById,
     updateDb: updateDb,
     deleteById: deleteById,
-    findAlertResponses:findAlertResponses
+    findAlertResponses: findAlertResponses
 }
 
 module.exports = responseController;

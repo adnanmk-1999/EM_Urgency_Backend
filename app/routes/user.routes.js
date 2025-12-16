@@ -1,10 +1,10 @@
 const express = require('express');
 const userRouter = express.Router();
 const userController = require('../controllers/user.controller');
-const verifySignUp  = require('../middleware/verifySignUp');
+const verifySignUp = require('../middleware/verifySignUp');
 const { authJwt } = require("../middleware");
 
-userRouter.post('/register', verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted,userController.signUp);
+userRouter.post('/register', verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted, userController.signUp);
 userRouter.post('/login', userController.signIn);
 
 //Gmail Login
