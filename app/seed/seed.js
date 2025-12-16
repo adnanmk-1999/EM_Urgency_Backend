@@ -110,7 +110,7 @@ async function seed() {
             {
                 Id: 1,
                 Name: "Admin",
-                Username: "admin",
+                Username: "admin1999",
                 Email: "admin@email.com",
                 Password: bcrypt.hashSync("Admin@123", SALT_ROUNDS),
                 Gender: "Male",
@@ -124,7 +124,7 @@ async function seed() {
             {
                 Id: 2,
                 Name: "Alice",
-                Username: "alice",
+                Username: "alice1999",
                 Email: "alice@email.com",
                 Password: bcrypt.hashSync("Alice@123", SALT_ROUNDS),
                 Gender: "Female",
@@ -138,8 +138,8 @@ async function seed() {
             {
                 Id: 3,
                 Name: "Bob",
-                Username: "bob",
-                Email: "bob@email.com",
+                Username: "bob1999",
+                Email: "mohamedkhalidadnan@gmail.com",
                 Password: bcrypt.hashSync("Bob@123", SALT_ROUNDS),
                 Gender: "Male",
                 Contact: "9876556787",
@@ -152,7 +152,7 @@ async function seed() {
             {
                 Id: 4,
                 Name: "Clara",
-                Username: "clara",
+                Username: "clara1999",
                 Email: "clara@email.com",
                 Password: bcrypt.hashSync("Clara@123", SALT_ROUNDS),
                 Gender: "Female",
@@ -166,7 +166,7 @@ async function seed() {
             {
                 Id: 5,
                 Name: "David",
-                Username: "david",
+                Username: "david1999",
                 Email: "david@email.com",
                 Password: bcrypt.hashSync("David@123", SALT_ROUNDS),
                 Gender: "Male",
