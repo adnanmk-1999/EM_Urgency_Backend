@@ -149,6 +149,34 @@ async function seed() {
                 Grade_Id: 1,
                 Job_Title_Id: 3,
             },
+            {
+                Id: 4,
+                Name: "Clara",
+                Username: "clara",
+                Email: "clara@email.com",
+                Password: bcrypt.hashSync("Clara@123", SALT_ROUNDS),
+                Gender: "Female",
+                Contact: "9012345678",
+                Image: "https://example.com/clara.png",
+                Location_Id: 2,      // Berlin
+                Department_Id: 2,    // Security
+                Grade_Id: 2,
+                Job_Title_Id: 2      // Doctor
+            },
+            {
+                Id: 5,
+                Name: "David",
+                Username: "david",
+                Email: "david@email.com",
+                Password: bcrypt.hashSync("David@123", SALT_ROUNDS),
+                Gender: "Male",
+                Contact: "9123456789",
+                Image: "https://example.com/david.png",
+                Location_Id: 1,      // Stuttgart
+                Department_Id: 1,    // Operations
+                Grade_Id: 2,
+                Job_Title_Id: 1      // Nurse
+            }
         ]);
 
         // ==========================
@@ -160,13 +188,255 @@ async function seed() {
 
         await UserRoles.bulkCreate(
             [
-                { user_id: 1, role_id: 2 }, // Admin → Admin
-                { user_id: 1, role_id: 1 }, // Admin → User
-                { user_id: 2, role_id: 1 }, // Alice → User
-                { user_id: 3, role_id: 1 }, // Bob → User
+                { user_id: 1, role_id: 2 },
+                { user_id: 1, role_id: 1 },
+                { user_id: 2, role_id: 1 },
+                { user_id: 3, role_id: 1 },
+                { user_id: 4, role_id: 1 },
+                { user_id: 5, role_id: 1 },
             ],
             { ignoreDuplicates: true }
         );
+        // ==========================
+        // ALERTS
+        // ==========================
+        console.log("Seeding alerts...");
+
+        await Alert.bulkCreate([
+            // ======================
+            // 2025-12-16
+            // ======================
+            {
+                Id: 1,
+                Subject: "Fire Drill Announcement",
+                Message: "Scheduled fire drill at 10:00 AM. Please cooperate.",
+                Date: new Date("2025-12-16T08:00:00.000Z"),
+                SentCount: 10,
+                category_id: 1,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 2,
+                Subject: "System Maintenance",
+                Message: "IT maintenance from 22:00 to 02:00. Services may be unavailable.",
+                Date: new Date("2025-12-16T20:00:00.000Z"),
+                SentCount: 11,
+                category_id: 1,
+                status_id: 1,
+                Created_By: 1
+            },
+            {
+                Id: 3,
+                Subject: "Emergency Ward Overload",
+                Message: "Emergency ward capacity exceeded. Redirect patients.",
+                Date: new Date("2025-12-16T09:30:00.000Z"),
+                SentCount: 9,
+                category_id: 2,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 4,
+                Subject: "Public Holiday Notice",
+                Message: "Hospital will operate with minimal staff tomorrow.",
+                Date: new Date("2025-12-16T00:00:00.000Z"),
+                SentCount: 5,
+                category_id: 3,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 5,
+                Subject: "Security Alert",
+                Message: "Unauthorized access attempt detected near main entrance.",
+                Date: new Date("2025-12-16T12:46:00.385Z"),
+                SentCount: 6,
+                category_id: 2,
+                status_id: 3,
+                Created_By: 1
+            },
+
+            // ======================
+            // 2025-12-17
+            // ======================
+            {
+                Id: 6,
+                Subject: "Power Backup Test",
+                Message: "Backup generators will be tested at noon.",
+                Date: new Date("2025-12-17T12:00:00.000Z"),
+                SentCount: 7,
+                category_id: 1,
+                status_id: 1,
+                Created_By: 1
+            },
+            {
+                Id: 7,
+                Subject: "Patient Record Audit",
+                Message: "Mandatory audit of patient records in all departments.",
+                Date: new Date("2025-12-17T09:00:00.000Z"),
+                SentCount: 9,
+                category_id: 2,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 8,
+                Subject: "Parking Restriction",
+                Message: "Parking area B closed for maintenance.",
+                Date: new Date("2025-12-17T06:00:00.000Z"),
+                SentCount: 4,
+                category_id: 1,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 9,
+                Subject: "Security Drill",
+                Message: "Security evacuation drill at 15:00.",
+                Date: new Date("2025-12-17T15:00:00.000Z"),
+                SentCount: 6,
+                category_id: 2,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 10,
+                Subject: "Cafeteria Closure",
+                Message: "Cafeteria closed due to maintenance.",
+                Date: new Date("2025-12-17T11:00:00.000Z"),
+                SentCount: 5,
+                category_id: 3,
+                status_id: 3,
+                Created_By: 1
+            },
+
+            // ======================
+            // 2025-12-18
+            // ======================
+            {
+                Id: 11,
+                Subject: "Blood Donation Camp",
+                Message: "Voluntary blood donation camp in Hall A.",
+                Date: new Date("2025-12-18T10:00:00.000Z"),
+                SentCount: 10,
+                category_id: 2,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 12,
+                Subject: "Water Supply Shutdown",
+                Message: "Water supply will be shut down for 2 hours.",
+                Date: new Date("2025-12-18T14:00:00.000Z"),
+                SentCount: 12,
+                category_id: 1,
+                status_id: 1,
+                Created_By: 1
+            },
+            {
+                Id: 13,
+                Subject: "Pharmacy Stock Update",
+                Message: "Critical medicines stock update required.",
+                Date: new Date("2025-12-18T09:30:00.000Z"),
+                SentCount: 13,
+                category_id: 2,
+                status_id: 2,
+                Created_By: 1
+            },
+            {
+                Id: 14,
+                Subject: "Network Outage",
+                Message: "Temporary network outage expected.",
+                Date: new Date("2025-12-18T16:00:00.000Z"),
+                SentCount: 8,
+                category_id: 1,
+                status_id: 3,
+                Created_By: 1
+            },
+            {
+                Id: 15,
+                Subject: "Holiday Schedule Reminder",
+                Message: "Please review updated holiday duty schedule.",
+                Date: new Date("2025-12-18T08:00:00.000Z"),
+                SentCount: 14,
+                category_id: 3,
+                status_id: 2,
+                Created_By: 1
+            }
+        ]);
+
+        // ==========================
+        // RESPONSES (Accepted / Rejected) – for 15 alerts
+        // ==========================
+        console.log("Seeding responses...");
+
+        await Response.bulkCreate([
+            // --------------------------
+            // 2025-12-16 alerts (1–5)
+            // --------------------------
+            { Id: 1, alert_id: 1, user_id: 1, response: "Accepted" },
+            { Id: 2, alert_id: 1, user_id: 2, response: "Accepted" },
+            { Id: 3, alert_id: 1, user_id: 3, response: "Rejected" },
+            { Id: 4, alert_id: 1, user_id: 5, response: "Accepted" },
+
+            { Id: 5, alert_id: 2, user_id: 1, response: "Accepted" },
+            { Id: 6, alert_id: 2, user_id: 2, response: "Accepted" },
+            { Id: 7, alert_id: 2, user_id: 5, response: "Accepted" },
+
+            { Id: 8, alert_id: 3, user_id: 3, response: "Accepted" },
+            { Id: 9, alert_id: 3, user_id: 2, response: "Rejected" },
+
+            { Id: 10, alert_id: 4, user_id: 1, response: "Accepted" },
+            { Id: 11, alert_id: 4, user_id: 4, response: "Accepted" },
+            { Id: 12, alert_id: 4, user_id: 5, response: "Rejected" },
+
+            { Id: 13, alert_id: 5, user_id: 4, response: "Accepted" },
+            { Id: 14, alert_id: 5, user_id: 1, response: "Rejected" },
+
+            // --------------------------
+            // 2025-12-17 alerts (6–10)
+            // --------------------------
+            { Id: 15, alert_id: 6, user_id: 1, response: "Accepted" },
+            { Id: 16, alert_id: 6, user_id: 2, response: "Accepted" },
+            { Id: 17, alert_id: 6, user_id: 5, response: "Accepted" },
+
+            { Id: 18, alert_id: 7, user_id: 2, response: "Accepted" },
+            { Id: 19, alert_id: 7, user_id: 5, response: "Accepted" },
+            { Id: 20, alert_id: 7, user_id: 3, response: "Rejected" },
+
+            { Id: 21, alert_id: 8, user_id: 1, response: "Accepted" },
+            { Id: 22, alert_id: 8, user_id: 4, response: "Rejected" },
+
+            { Id: 23, alert_id: 9, user_id: 4, response: "Accepted" },
+            { Id: 24, alert_id: 9, user_id: 3, response: "Accepted" },
+
+            { Id: 25, alert_id: 10, user_id: 2, response: "Accepted" },
+            { Id: 26, alert_id: 10, user_id: 4, response: "Accepted" },
+            { Id: 27, alert_id: 10, user_id: 1, response: "Rejected" },
+
+            // --------------------------
+            // 2025-12-18 alerts (11–15)
+            // --------------------------
+            { Id: 28, alert_id: 11, user_id: 1, response: "Accepted" },
+            { Id: 29, alert_id: 11, user_id: 2, response: "Accepted" },
+            { Id: 30, alert_id: 11, user_id: 3, response: "Rejected" },
+
+            { Id: 31, alert_id: 12, user_id: 5, response: "Accepted" },
+            { Id: 32, alert_id: 12, user_id: 2, response: "Accepted" },
+
+            { Id: 33, alert_id: 13, user_id: 2, response: "Accepted" },
+            { Id: 34, alert_id: 13, user_id: 1, response: "Accepted" },
+            { Id: 35, alert_id: 13, user_id: 4, response: "Rejected" },
+
+            { Id: 36, alert_id: 14, user_id: 3, response: "Accepted" },
+            { Id: 37, alert_id: 14, user_id: 1, response: "Accepted" },
+
+            { Id: 38, alert_id: 15, user_id: 4, response: "Accepted" },
+            { Id: 39, alert_id: 15, user_id: 2, response: "Rejected" },
+        ]);
+
+
         // ==========================
         // USER ↔ ALERT MAPPING
         // ==========================
@@ -186,17 +456,51 @@ async function seed() {
          * This requires that Alerts are already seeded BEFORE this runs.
          * i.e., Alert table must contain Ids you reference below.
          */
+
         await UserAlerts.bulkCreate(
             [
-                // Example mappings (update ids to match your seeded Alert IDs)
-                { user_id: 1, alert_id: 1 }, // Admin assigned Alert #1
-                { user_id: 2, alert_id: 1 }, // Alice assigned Alert #1
-                { user_id: 3, alert_id: 2 }, // Bob assigned Alert #2
+                // Admin gets all
+                ...Array.from({ length: 15 }, (_, i) => ({ user_id: 1, alert_id: i + 1 })),
+
+                // Others get subset
+                { user_id: 2, alert_id: 1 },
+                { user_id: 2, alert_id: 6 },
+                { user_id: 2, alert_id: 11 },
+
+                { user_id: 3, alert_id: 3 },
+                { user_id: 3, alert_id: 9 },
+                { user_id: 3, alert_id: 14 },
+
+                { user_id: 4, alert_id: 5 },
+                { user_id: 4, alert_id: 10 },
+                { user_id: 4, alert_id: 15 },
+
+                { user_id: 5, alert_id: 2 },
+                { user_id: 5, alert_id: 7 },
+                { user_id: 5, alert_id: 12 },
             ],
             { ignoreDuplicates: true }
         );
 
-        console.log("✅ user_alerts mapping done");
+        console.log("Updating random responses (simulate user actions)...");
+
+        const RESPONSES = ["Accepted", "Rejected"];
+        const RESPONSE_PROBABILITY = 0.65; // 65% users respond
+
+        const allResponses = await Response.findAll({ raw: true });
+
+        for (const r of allResponses) {
+            // Decide randomly if user responded
+            if (Math.random() < RESPONSE_PROBABILITY) {
+                const randomDecision =
+                    RESPONSES[Math.floor(Math.random() * RESPONSES.length)];
+
+                await Response.update(
+                    { Response: randomDecision },
+                    { where: { Id: r.Id } }
+                );
+            }
+        }
 
 
         console.log("\n✨ SEEDING COMPLETED SUCCESSFULLY ✨");
