@@ -8,13 +8,6 @@ function sendEmail(mailList, subject, message) {
 
     let transporter = nodemailer.createTransport({
         service: "gmail",
-        host: 'smtp.gmail.com',
-        // secureConnection: false,
-        port: 587,
-        // tls: {
-        //     ciphers: 'SSLv3',
-        //     rejectUnauthorized: false
-        // },
         auth: {
             user: process.env.EMAIL,
             pass: process.env.MAILPASSWORD
@@ -31,19 +24,28 @@ function sendEmail(mailList, subject, message) {
     };
     transporter.use('compile', hbs(handlebarOptions))
 
-    //var mailList = [['thasnisathar2017@gmail.com'], ['em-urgency@outlook.com'], ['thasnisathar2018@gmail.com'],['adnan.trv17ee003@gecbh.ac.in']]
-
 
     let mailOptions = {
-        from: 'emurgency.exp@gmail.com', // TODO: email sender
-        //to:['jijo.j@experionglobal.com,adnan.m@experionglobal.com','thasnisathar2017@gmail.com'], // TODO: email receiver
+        from: `"EM-Urgency" <${process.env.EMAIL}>`,
         to: mailList,
-        subject: subject,
-        template: 'email', // the name of the template file i.e email.handlebars
+        subject,
+        template: 'email',
         context: {
-            name: "Employee", // replace {{name}} with Adebola
-            message: message
-        }
+            name: 'Employee',
+            message
+        },
+        attachments: [
+            {
+                filename: 'logo.png',
+                path: path.join(__dirname, '../assets/logo.png'),
+                cid: 'logo@emurgency'
+            },
+            {
+                filename: 'logo-footer.png',
+                path: path.join(__dirname, '../assets/logo.png'),
+                cid: 'logoFooter@emurgency'
+            }
+        ]
     };
 
     transporter.sendMail(mailOptions, (err, data) => {
