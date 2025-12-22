@@ -103,60 +103,36 @@ This ERD directly maps to the Sequelize models used in the backend and forms the
 
 # 📁 Folder Structure
 
-The EM-Urgency backend is organized using a clean **MVC + DAO architecture**, ensuring clear separation of concerns and long-term maintainability.  
-Below is the high-level folder structure with an explanation of each major directory:
+The backend is organized using a clean MVC + DAO pattern, with the main source code inside the `app/` directory.
 
 ```
 EM_Urgency_Backend/
 │
-├── config/
-│   ├── database.config.js     # Sequelize database connection (MySQL)
-│   ├── auth.config.js         # JWT secrets and token configuration
+├── app/                           # Main backend source code
+│   ├── assets/                    # Static assets
+│   ├── config/                    # Environment, DB, auth configuration
+│   ├── controllers/               # API request handlers
+│   ├── dao/                       # Data Access Layer (Sequelize queries)
+│   ├── helpers/                   # Shared helper utilities
+│   ├── images/                    # Images used in emails/templates
+│   ├── middleware/                # JWT, role guards, auth middleware
+│   ├── models/                    # Sequelize models & associations
+│   ├── routes/                    # Express route definitions
+│   ├── seed/                      # Database seed scripts
+│   ├── services/                  # Business logic / reusable services
+│   └── views/                     # Handlebars email templates
 │
-├── controllers/               # Handles request logic and API responses
-│   ├── auth.controller.js
-│   ├── admin.controller.js
-│   ├── user.controller.js
-│   ├── alert.controller.js
-│   └── response.controller.js
-│
-├── dao/                       # Data Access Layer (Sequelize queries)
-│   ├── user.dao.js
-│   ├── alert.dao.js
-│   ├── response.dao.js
-│   └── role.dao.js
-│
-├── models/                    # Sequelize models representing database tables
-│   ├── user.model.js
-│   ├── alert.model.js
-│   ├── response.model.js
-│   ├── role.model.js
-│   ├── department.model.js
-│   └── location.model.js
-│
-├── routes/                    # API routes (maps URLs → controllers)
-│   ├── auth.routes.js
-│   ├── admin.routes.js
-│   ├── user.routes.js
-│   └── alert.routes.js
-│
-├── helpers/                   # Shared utilities and helper functions
-│   ├── email.helper.js        # Nodemailer email handling
-│   ├── token.helper.js        # JWT utilities
-│   └── chart.helper.js        # Analytics aggregation logic
-│
-├── views/                     # Email templates (Handlebars)
-│   └── email.handlebars
-│
-├── seed.js                    # Seeds roles, users, departments, locations
-│
-├── Dockerfile                 # Backend Docker image definition
-├── docker-compose.yml         # Docker orchestration (Backend + MySQL)
-│
-├── .env                       # Global runtime variables
-├── .env.mysql                 # MySQL environment configuration
-│
-└── index.js                   # Backend application entry point
+├── docs/                          # Documentation, diagrams, ERD
+├── .dockerignore
+├── .env
+├── .env.mysql
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile.dev
+├── package.json
+├── package-lock.json
+├── README.md
+└── server.js                      # Backend entry point
 ```
 
 This structure enables the backend to scale cleanly as new features such as additional notification channels, reporting modules, or role types are introduced.
