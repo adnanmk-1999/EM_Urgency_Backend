@@ -147,54 +147,44 @@ These files control server settings, database connections, authentication secret
 This file contains global runtime configuration used by the backend server.
 
 ```env
-PORT=4000
+JWT_SECRET=emurgency_secret
+JWT_REFRESH_SECRET=emurgency_refresh
 
-JWT_SECRET=your_jwt_secret
-JWT_REFRESH_SECRET=your_jwt_refresh_secret
+ACCESS_TOKEN_LIFE=3600     
+REFRESH_TOKEN_LIFE=86400   
 
-ACCESS_TOKEN_LIFE=3600
-REFRESH_TOKEN_LIFE=86400
+# Gmail SMTP
+EMAIL=emurgency2025@gmail.com
+MAILPASSWORD=chdigyefmzmtigsg
 ```
 
 **Used for:**
 - Setting the backend server port  
-- JWT authentication and token lifecycle configuration  
+- JWT authentication and token lifecycle configuration
+- SMTP connection setting for email alerts  
+
+> ⚠️ **Important:**  
+> SMTP connection (config) can be altered. But keep in mind:
+> For Gmail, regular account passwords will not work.  
+> You must generate an **App Password** and use it here.
 
 
 ### **2. `.env.mysql` — MySQL (Docker Environment)**
 
-This file is used when running the backend inside Docker with a MySQL container.
+This file is used when running the database inside with a MySQL container.
 
 ```env
 DB_HOST=mysql
-DB_PORT=3306
-DB_USER=emurgency_user
-DB_PASSWORD=emurgency_password
+DB_USER=emuser
+DB_PASSWORD=empass
 DB_NAME=em_urgency
+DB_DIALECT=mysql
 ```
 
 **Used for:**
-- Database host and port mapping inside Docker  
+- Database host mapping inside Docker  
 - MySQL authentication credentials  
 - Schema initialization for Sequelize  
-
-
-### **3. `.env.email` — Email Notification Configuration**
-
-This file contains credentials used by the email notification service (Nodemailer).
-
-```env
-EMAIL=your_email@gmail.com
-MAILPASSWORD=your_gmail_app_password
-```
-
-**Used for:**
-- Sending alert notifications via email  
-- SMTP authentication (Gmail App Password recommended)  
-
-> ⚠️ **Important:**  
-> For Gmail, regular account passwords will not work.  
-> You must generate an **App Password** and use it here.
 
 
 ### 🔐 Security Notes
