@@ -1,19 +1,19 @@
 const dbCreate = require("../models/index");
 
- function initialiseData(){
-    dbCreate.sequelize.sync({force: true}).then(() => {
+function initialiseData() {
+    dbCreate.sequelize.sync({ force: true }).then(() => {
         initialRole();
         initialDepartment();
         initialGrade();
         initialJobTitle();
         initialLocation();
         initialCategory();
-        initialStatus();  
+        initialStatus();
     });
 
     const Role = dbCreate.role;
 
-    function initialRole() {   
+    function initialRole() {
         Role.create({
             Id: 1,
             Type: "Admin"
@@ -25,7 +25,7 @@ const dbCreate = require("../models/index");
     }
 
     const Department = dbCreate.department;
-    
+
     function initialDepartment() {
         Department.create({
             Id: 1,
@@ -40,9 +40,9 @@ const dbCreate = require("../models/index");
             Name: "PES"
         });
     }
-    
+
     const Location = dbCreate.location;
-    
+
     function initialLocation() {
         Location.create({
             Id: 1,
@@ -57,9 +57,9 @@ const dbCreate = require("../models/index");
             Name: "Trivandrum"
         });
     }
-    
+
     const Grade = dbCreate.grade;
-    
+
     function initialGrade() {
         Grade.create({
             Id: 1,
@@ -74,9 +74,9 @@ const dbCreate = require("../models/index");
             Type: "B"
         });
     }
-    
+
     const JobTitle = dbCreate.jobTitle;
-    
+
     function initialJobTitle() {
         JobTitle.create({
             Id: 1,
@@ -97,7 +97,7 @@ const dbCreate = require("../models/index");
     }
 
     const Category = dbCreate.category;
-    
+
     function initialCategory() {
         Category.create({
             Id: 1,

@@ -70,6 +70,6 @@ var userDao = {
   findByLocations: findByLocations,
   findByID: findByID,
   finduser: finduser,
-  findByEmail : findByEmail
+  findByEmail: findByEmail
 }
 module.exports = userDao

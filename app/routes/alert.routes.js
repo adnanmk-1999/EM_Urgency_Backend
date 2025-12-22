@@ -33,4 +33,4 @@ alertRouter.post('/barchart', authJwt.verifyToken(['Admin']), alertController.ba
 
 
 
-module.exports=alertRouter;
+module.exports = alertRouter;

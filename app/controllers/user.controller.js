@@ -73,6 +73,7 @@ function signIn(req, res) {
           message: "Invalid Password!"
         });
       }
+
       var accessToken = jwt.sign({ id: user.Id }, config.secret, {
         expiresIn: config.accessExpire       //1 Hour
       });
@@ -101,6 +102,7 @@ function signIn(req, res) {
           accessToken: accessToken,
           refreshToken: refreshToken
         });
+        console.log(`Login success ${authorities}`)
       });
     })
     .catch(err => {
@@ -125,7 +127,7 @@ function reSignIn(req, res) {
       }
       var userId = decoded.id;
       var accessToken = jwt.sign({ id: userId }, config.secret, {
-        
+
         expiresIn: config.accessExpire
       });
       const response = {
@@ -193,9 +195,8 @@ async function GsignIn(req, res) {
 
   userDao.findByEmail({ name, email })
     .then((data) => {
-      const UserId = data[0].Id ;
+      const UserId = data[0].Id;
       const Username = data[0].Username
-
       var accessToken = jwt.sign({ id: UserId }, config.secret, {
         expiresIn: config.accessExpire       //1 Hour
       });
