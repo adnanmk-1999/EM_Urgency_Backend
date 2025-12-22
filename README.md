@@ -45,15 +45,6 @@ Security and scalability are core considerations of the system. Authentication a
 
 The application follows a modular and container-friendly architecture, making it suitable for deployment in Dockerized environments and adaptable for future extensions such as additional notification channels, real-time updates, or enterprise-scale deployments.
 
-### 🎥 Application Preview
-
-> _Backend workflows and alert processing (Dockerized environment):_
-
-<!-- GIF PLACEHOLDER -->
-![EM-Urgency Backend Demo](./docs/em-urgency-backend-demo.gif)
-
-> _(Replace this placeholder with the actual backend demo GIF.)_
-
 # 🧱 Technology Stack
 
 | Layer | Tools |
