@@ -296,91 +296,132 @@ This ensures consistent behavior across both **local** and **Docker-based** depl
 
 # 🧪 API Overview
 
-The EM-Urgency Backend exposes a RESTful API that supports authentication, alert management, response tracking, user targeting, and analytics used by the frontend dashboards.  
-Below is a simplified overview of the main API groups and commonly used endpoints.
+The EM‑Urgency backend exposes a REST API for authentication, alert management, response tracking, targeting, and admin analytics.
+
+> **Routing note (from the code):**
+> - Routes are mounted through `app/routes/index.js`.
+> - Main route groups:
+>   - `/users` → user + response endpoints
+>   - `/admin` → alert + analytics endpoints
+>   - `/roles` → role endpoints
 
 
-## 🔐 Authentication
+## 🔐 Authentication (under `/users`)
 
+```txt
+POST /users/register
+POST /users/login
+POST /users/glogin
+POST /users/relogin
 ```
-POST /auth/login
-POST /auth/refresh-token
+
+**Purpose**
+- Register and login return JWT tokens used for protected endpoints.
+- `relogin` is used for token renewal using access/refresh tokens (as implemented in the controller).
+
+
+## 🔑 Authorization header (important)
+
+Protected endpoints require the JWT access token in:
+
+```txt
+x-access-token: <JWT_ACCESS_TOKEN>
 ```
 
-Used by all users to authenticate and receive JWT access and refresh tokens.
+Role enforcement is applied by middleware:
+- Admin-only endpoints require the **Admin** role.
+- Some endpoints allow **User or Admin**.
 
 
 ## 👤 Users
 
-```
-GET /users                     # List all users (Admin only)
-GET /users/:id                 # Fetch user by ID
-GET /users/email/:email        # Fetch user by email
-```
-
-Users are associated with departments and locations, enabling targeted alert distribution.
-
-## 🚨 Alerts
-
-```
-POST /alerts                   # Create new alert (Admin)
-GET /alerts                    # List all alerts
-GET /alerts/:id                # Fetch alert details
-PUT /alerts/:id                # Update alert (Draft / Failed)
-DELETE /alerts/:id             # Delete alert
+```txt
+GET /users
+GET /users/alerts
 ```
 
-Alerts can exist in Draft, Sent, or Failed states depending on delivery status.
-
-## 📤 Alert Distribution
-
-```
-POST /alerts/send/all           # Send alert to all users
-POST /alerts/send/department    # Send alert by department
-POST /alerts/send/location      # Send alert by location
-POST /alerts/send/individual    # Send alert to specific users
-```
-
-These endpoints trigger email notifications and create alert–user mappings.
+**Notes**
+- `/users` returns user records (used for targeting / admin views).
+- `/users/alerts` returns alerts associated with a user (controller/DAO decides filtering).
 
 
-## ✅ Responses
+## 🚨 Alerts (Admin) — CRUD
 
-```
-PUT /users/response/:id         # Submit user response (Accept / Reject)
-GET /responses/alert/:id        # Get responses for a specific alert
+All alert management endpoints are under `/admin` and are **Admin-only**.
+
+```txt
+POST   /admin/alert
+GET    /admin/alert
+GET    /admin/alert/:id
+PUT    /admin/alert/:id
+DELETE /admin/alert/:id
 ```
 
-Each response is linked to a user and an alert for tracking and analytics.
 
+## 📤 Alert distribution (Admin)
 
-## 📊 Analytics (Admin Only)
+These endpoints send alerts and create the alert↔user mappings used for tracking:
 
-```
-GET /admin/piechartsent         # Sent vs Draft vs Failed alerts
-GET /admin/piechartfailed
-GET /admin/piechartdraft
-POST /admin/barchart            # Response vs Unresponse data
-```
-
-These endpoints provide aggregated data for charts displayed in the admin dashboard.
-
-
-### ✔ General Notes
-
-- All protected routes require a valid **JWT access token**.
-- Admin-only endpoints enforce role-based access control.
-- API responses generally follow the format:
-
-```
-{
-  success: true/false,
-  message: "...",
-  data: {...}
-}
+```txt
+POST /admin/sentalert/all
+POST /admin/sentalert/departments
+POST /admin/sentalert/locations
+POST /admin/sentalert/individuals
 ```
 
-This overview provides a high-level understanding of the backend API and its role in powering the EM-Urgency application.
+They trigger email notifications via the Nodemailer helper used in the backend.
+
+
+## ✅ Responses (User/Admin)
+
+Response endpoints are mounted under `/users` (because `response.routes.js` is attached to `/users`).
+
+```txt
+POST   /users/response
+GET    /users/response/:id
+PUT    /users/response/:id
+DELETE /users/response/:id
+
+POST   /users/alertresponses
+GET    /users/getresponses
+```
+
+**Typical usage**
+- Create a response for an alert (`POST /users/response`)
+- Update a response (`PUT /users/response/:id`)
+- Fetch responses (aggregate or per alert) for UI dashboards (`/users/alertresponses`, `/users/getresponses`)
+
+
+## 📊 Analytics (Admin)
+
+```txt
+GET  /admin/piechartsent
+GET  /admin/piechartdraft
+GET  /admin/piechartfailed
+POST /admin/barchart
+```
+
+`POST /admin/barchart` expects a JSON body like:
+
+```json
+{ "currentDate": "<date>" }
+```
+
+## 🧩 Roles
+
+```txt
+GET /roles
+GET /roles/allcontent
+GET /roles/usercontent     (User/Admin)
+GET /roles/admincontent    (Admin)
+```
+
+
+## ✔ General Notes
+
+- All protected routes require `x-access-token`.
+- Admin-only endpoints enforce role checks in middleware.
+- Response formats vary by controller, but most endpoints return JSON with a message and data payload.
 
 # 🔮 Future Enhancements
 
